@@ -1,0 +1,14 @@
+services:
+  eq-research-terminal:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-5}
+      - ACCESS_CODE=${ACCESS_CODE:-}
+      - RATE_LIMIT_MAX=${RATE_LIMIT_MAX:-30}
+    volumes:
+      # Persist research history across container restarts/rebuilds.
+      - ./backend/data:/app/backend/data
+    restart: unless-stopped

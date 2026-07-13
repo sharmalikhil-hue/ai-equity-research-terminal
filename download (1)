@@ -1,0 +1,42 @@
+// src/config.js
+//
+// Single source of truth for all runtime configuration. Everything else in
+// the app reads settings from here instead of touching process.env directly.
+
+require("dotenv").config();
+
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || "";
+
+// Demo Mode: if no real API key is configured, the app automatically runs
+// on realistic simulated agent output instead of calling Anthropic. This
+// means the product can be downloaded and demonstrated instantly, with zero
+// setup and zero cost, before a real key is ever added.
+const DEMO_MODE = !ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === "demo";
+
+const config = {
+  port: parseInt(process.env.PORT, 10) || 3001,
+  nodeEnv: process.env.NODE_ENV || "development",
+
+  anthropicApiKey: ANTHROPIC_API_KEY,
+  anthropicModel: process.env.ANTHROPIC_MODEL || "claude-sonnet-5",
+  anthropicVersion: "2023-06-01",
+  anthropicBaseUrl: "https://api.anthropic.com/v1/messages",
+
+  demoMode: DEMO_MODE,
+
+  accessCode: process.env.ACCESS_CODE || null,
+  allowedOrigin: process.env.ALLOWED_ORIGIN || "*",
+
+  rateLimit: {
+    windowMs: 15 * 60 * 1000,
+    max: parseInt(process.env.RATE_LIMIT_MAX, 10) || 30,
+  },
+
+  maxCompanies: 3,
+  maxInputLength: 200,
+
+  historyFile: process.env.HISTORY_FILE || require("path").join(__dirname, "..", "data", "history.json"),
+  maxHistoryRuns: 200,
+};
+
+module.exports = config;

@@ -1,0 +1,25 @@
+// src/routes/meta.js
+//
+// Small metadata endpoints the frontend uses to adapt its UI: whether an
+// access code is required, and whether the server is running in Demo Mode
+// or Live Mode (so the UI can show a clear banner either way).
+
+const express = require("express");
+const config = require("../config");
+
+const router = express.Router();
+
+router.get("/config", (req, res) => {
+  res.json({
+    requiresCode: !!config.accessCode,
+    demoMode: config.demoMode,
+    model: config.demoMode ? null : config.anthropicModel,
+    maxCompanies: config.maxCompanies,
+  });
+});
+
+router.get("/healthz", (req, res) => {
+  res.json({ ok: true, demoMode: config.demoMode });
+});
+
+module.exports = router;

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equity Research AI — Multi-Agent Terminal</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="accessGate">
+  <div class="gate-card">
+    <h3>&gt; Access Required</h3>
+    <p>This instance is protected. Enter the access code your host gave you to continue.</p>
+    <p class="gate-err" id="gateErr"></p>
+    <input type="password" id="gateInput" placeholder="Access code" autocomplete="off">
+    <button id="gateBtn">Unlock</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div id="modeBanner" class="mode-banner hidden"></div>
+
+  <header class="topbar">
+    <div>
+      <div class="brand">EQ-RESEARCH // MULTI-AGENT PIPELINE</div>
+      <h1 class="title">Equity Research AI Terminal</h1>
+    </div>
+    <div class="clock" id="clock"></div>
+  </header>
+
+  <div class="cmdbar">
+    <span class="prompt">&gt;</span>
+    <input id="tickerInput" type="text" placeholder="e.g. Nvidia, AMD, Broadcom  (up to 3, comma-separated)" autocomplete="off">
+    <button id="runBtn">RUN</button>
+  </div>
+  <div class="hint">Tip: enter 1 company for a full single-name report, or 2–3 comma-separated for a side-by-side comparison.</div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="research">Research</button>
+    <button class="tab-btn" data-tab="history">History</button>
+  </nav>
+
+  <section id="researchTab" class="tab-panel active">
+    <div id="pipelineGrid" class="pipeline-grid hidden"></div>
+    <div id="errorBanner" class="error-banner hidden"></div>
+    <div id="resultsContainer" class="results-container"></div>
+  </section>
+
+  <section id="historyTab" class="tab-panel">
+    <div id="historyList" class="history-list"></div>
+    <div id="historyDetail" class="results-container"></div>
+  </section>
+
+  <footer class="disclaimer">
+    AI-generated research for educational/demo purposes only. Not investment advice. Signals, figures, and the
+    compliance check are synthesized by language models from web search results (Live Mode) or fully simulated
+    (Demo Mode) and may be incomplete, outdated, or inaccurate — verify independently before making any financial
+    decision.
+  </footer>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
