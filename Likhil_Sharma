@@ -1,0 +1,18 @@
+I'll build a real working AI equity research pipeline: an interactive artifact where you enter a company, and it runs through multiple specialized AI research agents (news, fundamentals, sentiment) that feed into a synthesis agent producing an actual research note — mirroring the multi-agent approach the Magnetar article describes.
+Let me check the frontend design guidance first, then build it.
+Architected terminal-style stock analysis interface with multi-agent pipeline visualization
+Architected terminal-style stock analysis interface with multi-agent pipeline visualization
+This is a working AI equity-research pipeline, not a mockup — it makes real Anthropic API calls with web search enabled. Here's the architecture, which mirrors what Magnetar's approach is reportedly doing at a small scale:
+Four specialized agents, run in sequence:
+
+1. News agent — web-searches recent catalysts, events, filings (last 3–6 months)
+2. Fundamentals agent — web-searches revenue, margins, valuation multiples, balance sheet notes
+3. Sentiment agent — web-searches analyst ratings and market sentiment
+4. Synthesis agent — takes only the outputs of agents 1–3 (no web access itself, forcing it to reason over gathered evidence rather than re-searching) and produces a structured note: signal (bullish/neutral/bearish), confidence score, bull case, bear case, risks, and a written thesis
+UI: a terminal-style command bar where you type a company/ticker, a live pipeline visualizer showing each agent's status (queued → running → done), and a research report that populates section by section with real cited sources.
+Try it with a real company name (e.g. "Nvidia" or "Tata Motors") and hit Run — you'll see the agents light up sequentially as they actually call out and research.
+A few things worth highlighting to your mentor as design choices, since this is being evaluated:
+
+* Agent decomposition (why 4 separate calls, not 1 mega-prompt) — mirrors how real research desks divide labor
+* Isolating synthesis from web access — forces the final agent to reason over evidence rather than just re-searching and restating, closer to how a real analyst works from a research packet
+* Structured JSON contracts between agents — makes the pipeline debuggable/auditable, which matters a lot in finance contexts, I'll add both: a 5th compliance/risk-check agent, and support for comparing 2–3 companies side by side. This means restructuring the pipeline view (grid of companies × agents) and adding a comparison table above the individual reports. i want to build this in streamlit so guide me stepwise how can do it and make it and run in real live mode
